@@ -126,104 +126,53 @@
 										</div>
 									</div>
 									<div class="read-content-body">
-										<pre class="h5">
 											<c:out value="${reply.content }"/>
-										</pre>
 										<hr>
 									</div>
 									
-									
 									<div class="form-group mt-md-5 p-2">
-										<div class="input-group mb-3">
-											<input type="text" class="form-control"
-												placeholder="댓글 내용을 입력해주세요"
-												aria-label="Recipient's username"
-												aria-describedby="button-addon2">
-											<div class="input-group-append">
-												<button class="btn btn-outline-secondary" type="button" id="registerComment">댓글 등록</button>
-											</div>
+										<!-- 댓글 보기 버튼 작성.. -->
+										<div class="mb-5" id="ajaxComment">
+											<button class="btn btn-sm" id="ajaxCommentBtn" data-rno="${reply.rno}" data-qno="${reply.qno }"><i class="fa fa-comment"> 댓글 보기</i></button>
 										</div>
-										<div class="recent-comment m-t-15 p-2 pl-3">
-											<div class="media">
-												<div class="media-body">
-													<div style="margin-left : 0px;">
-														
-														<div class="media-body ml-md-3">
-															<div class="pull-right">
-																<p id="replyDelete" style="cursor: pointer;">삭제</p>
-																<p id="replyUpdate" style="cursor: pointer;">수정</p>
-																<p id="infiniteComment" style="cursor: pointer;">대댓글 달기</p>
-															</div>
-															<h4 class="media-heading text-primary">최영우</h4>
-															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
-															<p>10 min ago</p>
-														</div>
-													</div>
-													
-													<div id="infiniteReplySpace">
-														
-													</div>
-													
-													
-													<hr>
-													<div style="margin-left : 30px;">
-														<div class="pull-right">
-															<p>삭제</p>
-															<p>수정</p>
-															<p>대댓글 달기</p>
-														</div>
-														<i class="fa fa-arrow-right float-left" ></i>
-														<div class="media-body ml-md-3">
-															<h4 class="media-heading text-primary">최영우</h4>
-															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
-															<p>10 min ago</p>
-														</div>
-													</div>
-													<hr>
-													<div style="margin-left : 60px;">
-														<div class="pull-right">
-															<p>삭제</p>
-															<p>수정</p>
-															<p>대댓글 달기</p>
-														</div>
-														<i class="fa fa-arrow-right float-left" ></i>
-														<div class="media-body ml-md-3">
-															<h4 class="media-heading text-primary">최영우</h4>
-															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
-															<p>10 min ago</p>
-														</div>
-													</div>
-													<hr>
-													<div style="margin-left : 90px;">
-														<div class="pull-right">
-															<p>삭제</p>
-															<p>수정</p>
-															<p>대댓글 달기</p>
-														</div>
-														<i class="fa fa-arrow-right float-left" ></i>
-														<div class="media-body ml-md-3">
-															<h4 class="media-heading text-primary">최영우</h4>
-															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
-															<p>10 min ago</p>
-														</div>
-													</div>
-													<hr>
+										
+										<div id="commentArea${reply.rno }">
+											<div class="input-group mb-3">
+												<input type="text" class="form-control"
+													placeholder="댓글 내용을 입력해주세요"
+													aria-label="Recipient's username"
+													aria-describedby="button-addon2">
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="button" id="registerComment">댓글 등록</button>
 												</div>
 											</div>
-											<div class="row mt-4 m-4 mx-sm-4">
-												<div class="col-7">
-													<div class="text-left">1 - 20 of 568</div>
+											<div class="recent-comment m-t-15 p-2 pl-3">
+												
+												<!-- 댓글 foreach 문 돌아아한다... rno를 통하여.. -->
+												<!-- 
+													if : replyComment의 rno가 해당 rno에 해당 되면 그거 foreach..?
+												 -->
+												<div id="rno${reply.rno }">
+													
 												</div>
-												<div class="col-5">
-													<div class="btn-group float-right">
-														<button class="btn btn-dark" type="button">
-															<i class="fa fa-angle-left"></i>
-														</button>
-														<button class="btn btn-dark" type="button">
-															<i class="fa fa-angle-right"></i>
-														</button>
+												<!-- 댓글 end -->
+												
+												<div class="row mt-4 m-4 mx-sm-4">
+													<div class="col-7">
+														<div class="text-left">1 - 20 of 568</div>
+													</div>
+													<div class="col-5">
+														<div class="btn-group float-right">
+															<button class="btn btn-dark" type="button">
+																<i class="fa fa-angle-left"></i>
+															</button>
+															<button class="btn btn-dark" type="button">
+																<i class="fa fa-angle-right"></i>
+															</button>
+														</div>
 													</div>
 												</div>
+											
 											</div>
 										</div>
 									</div>
@@ -251,9 +200,53 @@
 	</div>
 </div>
 <%@ include file="../include/footer.jsp"%>
-
+<script src="/resources/choiFunction/reply.js"></script>
 <script>
 	$(function() {
+		// 댓글 ajax 호출
+		
+		$('.btn btn-sm, button').on("click", function(e){
+			// ajax 비동기 통신 실행
+			var qno = $(this).data("rno");
+			var rno = $(this).data("qno");
+			
+			reply.getList(qno, rno, function(result){
+				$.each(result, function(index, item){
+					var realWriter;
+					if(!item.writer){
+						realWriter = 'anonymous';
+					}else{
+						realWriter = item.writer;
+					}
+					
+					$('#rno'+item.rno).append('<div class="media">' +
+												'<div class="media-body">' +
+													'<div style="margin-left : 0px;">' + 
+														'<div class="media-body ml-md-3">' +
+															'<div class="pull-right">' + 
+																'<p id="replyDelete" style="cursor: pointer;">삭제</p>' +
+																'<p id="replyUpdate" style="cursor: pointer;">수정</p>' +
+																'<p id="infiniteComment" style="cursor: pointer;">대댓글 달기</p>' +
+															'</div>' +
+															'<h4 class="media-heading text-primary">'+ realWriter +'</h4>'+
+															'<p>' + item.content + '</p>' + 
+															'<p>10 min ago</p>' +
+														'</div>' +
+													'</div>' +
+													'<div id="infiniteReplySpace">' +
+													
+													'</div>' + 
+												'</div>' + 
+											'</div>');
+				});
+			});
+			
+			
+			$('#commentArea'+$(this).data("rno")).show();
+		});
+		
+		
+		
 		var replyCard = $('#replyCard');
 
 		replyInit(replyCard);

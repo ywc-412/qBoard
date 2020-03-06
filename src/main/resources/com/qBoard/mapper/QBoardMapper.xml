@@ -3,6 +3,8 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qBoard.mapper.QBoardMapper">
+	
+	<!-- list start -->
 	<select id="getListWithPaging" resultType="com.qBoard.domain.QuestionBVO">
 		<![CDATA[		
 			SELECT * FROM (
@@ -18,10 +20,19 @@
 		SELECT COUNT(*) FROM questionb
 	</select>
 	
+	<!-- list end -->
+	
+	<!-- get board start -->
 	<select id="getBoard" resultType="com.qBoard.domain.QuestionBVO">
 		SELECT * FROM questionb WHERE qno = #{qNo}
 	</select>
 	
+	<select id="getReply" resultType="com.qBoard.domain.ReplyVO">
+		SELECT * FROM reply WHERE qno = #{qNo}
+	</select>
+	<!-- get board end -->
+	
+	<!-- question insert -->
 	<insert id="insertQuestion">
 		<selectKey keyProperty="qno" order="BEFORE" resultType="int">
 			SELECT seq_qBoard.nextval FROM dual
@@ -29,18 +40,22 @@
 		INSERT INTO questionB(qno, title, content) VALUES(#{qno}, #{title}, #{content})
 	</insert>
 	
-	<select id="getReply" resultType="com.qBoard.domain.ReplyVO">
-		SELECT * FROM reply WHERE qno = #{qNo}
-	</select>
-	
-	<update id="updateReplyChk">
-		update questionB SET replyChk = 1 where qno=#{rno}
-	</update>
-	
+	<!-- question 답글 -->
 	<insert id="insertReply">
 		<selectKey keyProperty="rno" order="BEFORE" resultType="int">
 			SELECT seq_reply.nextval FROM dual
 		</selectKey>
 		INSERT INTO reply(qno, rno, title, content) VALUES(#{qno}, #{rno}, #{title}, #{content})
 	</insert>
+	<!-- 답글 달면 update 쿼리 -->
+	<update id="updateReplyChk">
+		update questionB SET replyChk = 1 where qno=#{rno}
+	</update>
+	
+	<!-- 해당 댓글 ajax 비동기 처리 요청 쿼리 -->
+	<select id="getReplyComment" resultType="com.qBoard.domain.ReplyCommentVO">
+		select * from replyComment where qno=#{qno} and rno=#{rno} order by reorder
+	</select>
+	
+	
 </mapper>

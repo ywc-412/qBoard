@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.qBoard.domain.PageCriteria;
 import com.qBoard.domain.QuestionBVO;
+import com.qBoard.domain.ReplyCommentVO;
 import com.qBoard.domain.ReplyVO;
 import com.qBoard.mapper.QBoardMapper;
 
@@ -62,6 +63,12 @@ public class QBoardServiceImpl implements QBoardService{
 	@Override
 	public int updateReplyChk(Integer qno) {
 		return qBoardMapper.updateReplyChk(qno);
+	}
+
+	@Override
+	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno) {
+		
+		return qBoardMapper.getReplyComment(qno, rno);
 	}
 	
 	
