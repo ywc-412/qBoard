@@ -23,19 +23,23 @@
 									<div class="media-body">
 										<h5>질문 제목</h5>
 										<div class="form-group">
-											<input type="text" class="form-control input-default " placeholder="input-default">
-											
+											<input type="text" class="form-control input-default" placeholder="질문 제목을 입력해주세요!" id="title">
 										</div>
 										<h5>질문 내용</h5>
 										<div class="form-group">
-											<textarea id="email-compose-editor" class="textarea_editor form-control bg-transparent" rows="30" style="height: 100px;" placeholder="Enter text ..."></textarea>
+											<textarea id="email-compose-editor" class="textarea_editor form-control bg-transparent" rows="30" style="height: 100px;" placeholder="질문 내용을 입력해주세요!"></textarea>
                                         </div>
 									</div>
+									<form action="/qBoard/regBoard" method="post" id="registerForm">
+										<!-- 제목하고 내용을 DB에 저장시키기 위한 임시 공간 -->
+										
+									</form>
 								</div>
 
 								<div class="read-content-attachment">
 									<h6><i class="fa fa-download mb-2"></i> 첨부파일
 										<span>(3)</span></h6>
+									
 									<div class="row attachment">
 										<div class="col-auto">
 											<a href="javascript:void()" class="text-muted">My-Photo.png</a>
@@ -50,8 +54,7 @@
 								</div>
 								<hr>
 							</div>
-							
-								<button type="button" class="btn btn-primary pull-right">질문 등록하기</button>
+							<button type="button" class="btn btn-primary pull-right" id="registerQuestion">질문 등록하기</button>
 						</div>
 						<!-- /# card -->
 					</div>
@@ -68,69 +71,31 @@
 		</div>
 	</div>
 	<!-- jquery vendor -->
-	<script src="assets/js/lib/jquery.min.js"></script>
-	<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
-	<!-- nano scroller -->
-	<script src="assets/js/lib/menubar/sidebar.js"></script>
-	<script src="assets/js/lib/preloader/pace.min.js"></script>
-	<!-- sidebar -->
-	<script src="assets/js/lib/bootstrap.min.js"></script>
-
-	<!-- bootstrap -->
-
-	<script src="assets/js/lib/circle-progress/circle-progress.min.js"></script>
-	<script src="assets/js/lib/circle-progress/circle-progress-init.js"></script>
-
-	<script src="assets/js/lib/morris-chart/raphael-min.js"></script>
-	<script src="assets/js/lib/morris-chart/morris.js"></script>
-	<script src="assets/js/lib/morris-chart/morris-init.js"></script>
-
-	<!--  flot-chart js -->
-	<script src="assets/js/lib/flot-chart/jquery.flot.js"></script>
-	<script src="assets/js/lib/flot-chart/jquery.flot.resize.js"></script>
-	<script src="assets/js/lib/flot-chart/flot-chart-init.js"></script>
-	<!-- // flot-chart js -->
-
-
-	<script src="assets/js/lib/vector-map/jquery.vmap.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.algeria.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.argentina.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.brazil.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.france.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.germany.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.greece.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.iran.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.iraq.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.russia.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.tunisia.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.europe.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.usa.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/vector.init.js"></script>
-
-	<script src="assets/js/lib/weather/jquery.simpleWeather.min.js"></script>
-	<script src="assets/js/lib/weather/weather-init.js"></script>
-	<script src="assets/js/lib/owl-carousel/owl.carousel.min.js"></script>
-	<script src="assets/js/lib/owl-carousel/owl.carousel-init.js"></script>
-	<script src="assets/js/scripts.js"></script>
-	<!-- scripit init-->
-
+	<%@ include file="../include/footer.jsp" %>
+	
+	<script type="text/javascript" src="/resources/choiFunction/removeEscape.js"></script>
+	<script>
+		$('#registerQuestion').on("click", function(e){
+			e.preventDefault();
+			
+			var title = $('#title').val();
+			var textArea = $('#email-compose-editor').val();
+			
+			// 공백 처리..
+			if(!title || !textArea){
+				alert('제목 또는 내용을 입력해주세요!');
+				return;
+			}
+			
+			var resultTitle = removeBad(title);
+			var resultTextArea = removeBad(textArea);
+			
+			
+			var registerForm = $('#registerForm');
+			
+			registerForm.append('<input type="hidden" name="title" value="<c:out value="'+ resultTitle +'" escapeXml="false"/>"/><input type="hidden" name="content" value="<c:out value="'+ resultTextArea +'" escapeXml="false"/>"/>').submit();
+		});
+		
+	</script>
+	
 </body></html>

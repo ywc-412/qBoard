@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@include file="../include/menubar.jsp" %>
-
-
 	<div class="content-wrap">
 		<div class="main">
 			<div class="container-fluid">
@@ -18,7 +16,7 @@
 					<div class="col-lg-12">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="card-title float-left">질문 게시판</h4>
+								<h4 class="card-title float-left">질문 게시판 ${totalCount}</h4>
 								<button type="button" class="btn btn-secondary pull-right" onclick="location.href='/qBoard/regBoard'">질문 등록하기</button>
 							</div>
 							<div class="card-body">
@@ -27,46 +25,79 @@
 										<thead>
 											<tr>
 												<th></th>
-												<th>글 제목</th>
+												<th style="width: 50%">글 제목</th>
 												<th>답변 상황</th>
 												<th>글 작성시간</th>
-												<th>글 작성자</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr onclick="location.href='getBoard.html'">
-												<th><i class="fa fa-lock" aria-hidden="true"></i></th>
-												<td>이거 어떻게 해요?</td>
-												<td><span class="badge badge-primary">답변완료</span>
-												</td>
-												<td>2020.02.11</td>
-												<td class="color-primary">ywc412</td>
-											</tr>
-											<tr onclick="location.href='getBoard.html'">
-												<th><i class="fa fa-unlock" aria-hidden="true"></i></th>
-												<td>아니 이거 어떻게 하냐구영... ㅎㅎ</td>
-												<td><span class="badge badge-success">답변 대기 중</span>
-												</td>
-												<td>2020.02.11</td>
-												<td class="color-success">ywc412</td>
-											</tr>
+											<c:forEach items="${list}" var="list">
+												<tr data-qno="${list.qno}" style="cursor: pointer;">
+													<th>
+														<c:choose>
+															<c:when test="${list.privacyChk == 0}">
+																<i class="fa fa-unlock" aria-hidden="true"></i>
+															</c:when>
+															<c:when test="${list.privacyChk == 1}">
+																<i class="fa fa-lock" aria-hidden="true"></i>
+															</c:when>
+														</c:choose>
+													</th>
+													<td><c:out value="${list.title}" escapeXml="true"/> </td>
+													<td>
+														<c:choose>
+															<c:when test="${list.replyChk == 0}">
+																<span class="badge badge-success">
+																	답변이 하나도 없어요 ㅠㅠ
+																</span>
+															</c:when>
+															<c:when test="${list.replyChk == 1}">
+																<span class="badge badge-primary">
+																	답변 완료
+																</span>
+															</c:when>
+														</c:choose>
+													</td>
+													<td>
+														<fmt:formatDate value="${list.writeDate }" pattern="yyyy.MM.dd"/>
+													</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 									<br>
 									<div class="fa-pull-right">
-									<ul class="pagination pagination-xs pagination-gutter">
-                                        <li class="page-item page-indicator">
-                                            <a class="page-link" href="javascript:void()">prev</a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="javascript:void()">1</a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="javascript:void()">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:void()">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="javascript:void()">4</a></li>
-                                        <li class="page-item page-indicator">
-                                            <a class="page-link" href="javascript:void()">next</a>
-                                        </li>
-                                    </ul>
+										<form method="get" action="/qBoard/board" id="pageActionForm">
+											<ul class="pagination pagination-xs pagination-gutter">
+												<c:if test="${pageMaker.prev}">
+													<li class="page-item page-indicator">
+			                                            <a class="page-link" href="1">
+															<span aria-hidden="true">&laquo;&laquo;</span>
+														</a>
+			                                        </li>
+			                                        <li class="page-item page-indicator">
+			                                            <a class="page-link" href="javascript:void()">
+															<span aria-hidden="true">&laquo;</span>
+														</a>
+			                                        </li>
+		                                        </c:if>
+		                                        <c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage}" var="currentPage">
+		                                        	<a class="page-link" href="${currentPage}">${currentPage}</a>
+		                                        </c:forEach>
+		                                        <c:if test="${pageMaker.next}">
+			                                        <li class="page-item page-indicator">
+			                                            <a class="page-link" href="javascript:void()">
+															<span aria-hidden="true">&raquo;</span>
+														</a>
+			                                        </li>
+			                                        <li class="page-item page-indicator">
+			                                            <a class="page-link" href="${pageMaker.realEnd}">
+															<span aria-hidden="true">&raquo;&raquo;</span>
+														</a>
+			                                        </li>
+		                                        </c:if>
+		                                    </ul>
+	                                    </form>
                                     </div>
 								</div>
 							</div>
@@ -85,70 +116,21 @@
 			</div>
 		</div>
 	</div>
-	<!-- jquery vendor -->
-	<script src="assets/js/lib/jquery.min.js"></script>
-	<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
-	<!-- nano scroller -->
-	<script src="assets/js/lib/menubar/sidebar.js"></script>
-	<script src="assets/js/lib/preloader/pace.min.js"></script>
-	<!-- sidebar -->
-	<script src="assets/js/lib/bootstrap.min.js"></script>
-
-	<!-- bootstrap -->
-
-	<script src="assets/js/lib/circle-progress/circle-progress.min.js"></script>
-	<script src="assets/js/lib/circle-progress/circle-progress-init.js"></script>
-
-	<script src="assets/js/lib/morris-chart/raphael-min.js"></script>
-	<script src="assets/js/lib/morris-chart/morris.js"></script>
-	<script src="assets/js/lib/morris-chart/morris-init.js"></script>
-
-	<!--  flot-chart js -->
-	<script src="assets/js/lib/flot-chart/jquery.flot.js"></script>
-	<script src="assets/js/lib/flot-chart/jquery.flot.resize.js"></script>
-	<script src="assets/js/lib/flot-chart/flot-chart-init.js"></script>
-	<!-- // flot-chart js -->
-
-
-	<script src="assets/js/lib/vector-map/jquery.vmap.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.algeria.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.argentina.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.brazil.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.france.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.germany.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.greece.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.iran.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.iraq.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.russia.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.tunisia.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.europe.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.usa.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/vector.init.js"></script>
-
-	<script src="assets/js/lib/weather/jquery.simpleWeather.min.js"></script>
-	<script src="assets/js/lib/weather/weather-init.js"></script>
-	<script src="assets/js/lib/owl-carousel/owl.carousel.min.js"></script>
-	<script src="assets/js/lib/owl-carousel/owl.carousel-init.js"></script>
-	<script src="assets/js/scripts.js"></script>
-	<!-- scripit init-->
-
+	<%@ include file="../include/footer.jsp" %>
+	<script>
+		$(function(){
+			$('tr').on("click", function(e){
+				var qno = $(this).data("qno");
+				location.href="/qBoard/getBoard?qNo="+qno;
+			});
+			
+			$('.page-link, a').on("click", function(e){
+				e.preventDefault();
+				var pageActionForm = $('#pageActionForm');
+				pageActionForm.append('<input type="hidden" value="'+$(this).attr('href')+'" name="pageNum">');
+				pageActionForm.submit();
+			});
+		});
+		
+	</script>
 </body></html>

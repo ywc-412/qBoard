@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
    <!-- include start -->
-	
+	<script src="/resources/assets/js/lib/jquery.min.js"></script>
 	<%@include file="include/menubar.jsp" %>
 
 	<!-- include end -->
@@ -38,7 +38,7 @@
 										<a href="page-forgot-password.html">Forgot Password?</a>
 									</div>
 									<div class="text-center">
-										<button type="submit" class="btn btn-primary btn-block">Sign me in</button>
+										<button type="button" class="btn btn-primary btn-block" id="memberRegister" onclick="location.href='/register'">Sign me in</button>
 									</div>
 								</div>
 							</div>
@@ -65,28 +65,4 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- jquery vendor -->
-	<script src="resources/assets/js/lib/jquery.min.js"></script>
-	<script src="resources/assets/js/lib/jquery.nanoscroller.min.js"></script>
-	<!-- nano scroller -->
-	<script src="resources/assets/js/lib/menubar/sidebar.js"></script>
-	<script src="resources/assets/js/lib/preloader/pace.min.js"></script>
-	<!-- sidebar -->
-	<script src="resources/assets/js/lib/bootstrap.min.js"></script>
-
-
-	<!--  flot-chart js -->
-	<script src="resources/assets/js/lib/flot-chart/jquery.flot.js"></script>
-	<script src="resources/assets/js/lib/flot-chart/jquery.flot.resize.js"></script>
-	<script src="resources/assets/js/lib/flot-chart/flot-chart-init.js"></script>
-	<!-- // flot-chart js -->
-
-	<script src="resources/assets/js/lib/weather/jquery.simpleWeather.min.js"></script>
-	<script src="resources/assets/js/lib/weather/weather-init.js"></script>
-	<script src="resources/assets/js/lib/owl-carousel/owl.carousel.min.js"></script>
-	<script src="resources/assets/js/lib/owl-carousel/owl.carousel-init.js"></script>
-	<script src="resources/assets/js/scripts.js"></script>
-	<!-- scripit init-->
-
-</body></html>
+<%@include file="include/footer.jsp" %>

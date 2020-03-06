@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +36,7 @@
 
 	<link href="/resources/assets/css/lib/helper.css" rel="stylesheet">
 	<link href="/resources/assets/css/style.css" rel="stylesheet">
+	
 </head>
 
 <body>
@@ -85,7 +89,7 @@
 										<ul>
 											<li>
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/3.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Mr. John</div>
@@ -95,7 +99,7 @@
 											</li>
 											<li>
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/3.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Mariam</div>
@@ -105,7 +109,7 @@
 											</li>
 											<li>
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/3.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Tasnim</div>
@@ -115,7 +119,7 @@
 											</li>
 											<li>
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/3.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Mr. John</div>
@@ -140,7 +144,7 @@
 										<ul>
 											<li class="notification-unread">
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/1.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/1.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Michael Qin</div>
@@ -150,7 +154,7 @@
 											</li>
 											<li class="notification-unread">
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/2.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/2.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Mr. John</div>
@@ -160,7 +164,7 @@
 											</li>
 											<li>
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/3.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/3.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Michael Qin</div>
@@ -170,7 +174,7 @@
 											</li>
 											<li>
 												<a href="#">
-													<img class="pull-left m-r-10 avatar-img" src="assets/images/avatar/2.jpg" alt="" />
+													<img class="pull-left m-r-10 avatar-img" src="/resources/assets/images/avatar/2.jpg" alt="" />
 													<div class="notification-content">
 														<small class="notification-timestamp pull-right">02:34 PM</small>
 														<div class="notification-heading">Mr. John</div>

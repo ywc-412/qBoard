@@ -1,210 +1,313 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@include file="../include/menubar.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@include file="../include/menubar.jsp"%>
 
 
-	<div class="content-wrap">
-		<div class="main">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-lg-8 p-r-0 title-margin-right">
-						<div class="page-header">
+<div class="content-wrap">
 
-						</div>
-					</div>
+	<div class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-8 p-r-0 title-margin-right">
+					<div class="page-header"></div>
 				</div>
-				<!-- /# row -->
-				<section id="main-content">
-					<div class="col-lg-12">
-						<div class="card">
-
-							<div class="read-content">
-								<button type="button" class="btn btn-primary pull-right">답변하기</button>
-								<div class="media mb-4 mt-5">
-									<div class="media-body">
-										<span class="pull-right">07:23 AM</span>
-										<h5 class="my-1">질문 제목</h5>
-									</div>
-
+			</div>
+			<!-- /# row -->
+			<section id="main-content">
+				<div class="col-lg-12">
+					<div class="card">
+						<div class="read-content">
+							<button type="button" class="btn btn-primary pull-right"
+								id="reply">답변하기</button>
+							<div class="media mb-4 mt-5">
+								<div class="media-body">
+									<span class="pull-right">07:23 AM</span>
+									<h4 class="my-1 h4"><c:out value="${board.title}" escapeXml="true"/></h4>
 								</div>
-
-								<div class="read-content-body">
-									<p>
-										WAS와 웹서버의 차이점이 무엇인가요??
-									</p>
-									<hr>
-								</div>
-								<div class="read-content-attachment">
-									<h6><i class="fa fa-download mb-2"></i> 첨부파일
-										<span>(3)</span></h6>
-									<div class="row attachment">
-										<div class="col-auto">
-											<a href="javascript:void()" class="text-muted">My-Photo.png</a>
-										</div>
-										<div class="col-auto">
-											<a href="javascript:void()" class="text-muted">My-File.docx</a>
-										</div>
-										<div class="col-auto">
-											<a href="javascript:void()" class="text-muted">My-Resume.pdf</a>
-										</div>
-									</div>
-								</div>
+							</div>
+							<div class="read-content-body">
+								<p class="h5"><c:out value="${board.content}" escapeXml="true"/></p>
 								<hr>
 							</div>
-						</div>
-						<!-- /# card -->
-						<div class="card">
-							<div class="read-content">
-								<div class="media mb-4 mt-5">
-									<div class="media-body"><span class="pull-right">07:23 AM</span>
-										<h5 class="my-1">답변...</h5>
+							<div class="read-content-attachment">
+								<h6>
+									<i class="fa fa-download mb-2"></i> 첨부파일 <span>(3)</span>
+								</h6>
+								<div class="row attachment">
+									<div class="col-auto">
+										<a href="javascript:void()" class="text-muted">My-Photo.png</a>
+									</div>
+									<div class="col-auto">
+										<a href="javascript:void()" class="text-muted">My-File.docx</a>
+									</div>
+									<div class="col-auto">
+										<a href="javascript:void()" class="text-muted">My-Resume.pdf</a>
 									</div>
 								</div>
-								<hr>
-								<div class="read-content-body">
-									<p>ws는 정적인 부분을 처리하는 반면 was는 동적인 부분을 처리합니다.</p>
-									<hr>
+							</div>
+							<hr>
+						</div>
+					</div>
+
+
+					<!-- 답변하기 누르면 답변 show 할수 있음  (start)  -->
+					<div class="card" id="replyCard">
+						<div class="read-content">
+							<div class="media mb-4 mt-5">
+								<div class="media-body">
+									<button class="btn btn-primary float-right" id="replyCancel">답변
+										취소</button>
+									<h5>답변 제목</h5>
+									<br>
+									<div class="form-group">
+										<input type="text" class="form-control input-default"
+											placeholder="답변 제목을 입력해주세요" id="title">
+									</div>
+									<h5>질문 내용</h5>
+									<div class="form-group">
+										<textarea id="email-compose-editor"
+											class="textarea_editor form-control bg-transparent" rows="30"
+											style="height: 100px;" placeholder="답변 내용을 입력해주세요!" wrap="hard"></textarea>
+									</div>
 								</div>
-								<div class="form-group mt-md-5">
-									<input type="text" class="col-md-11 form-control input-rounded float-left" placeholder="답변에 대해 댓글">
-									<button type="submit" class="btn btn-primary">댓글 등록</button>
-									<div class="recent-comment m-t-15">
-										<div class="media">
-											<div class="media-left">
-												<a href="#"><img class="media-object mr-3" src="./images/avatar/4.png" alt=""></a>
+								<form action="/qBoard/regReply" method="post" id="registerForm">
+									<!-- 제목하고 내용을 DB에 저장시키기 위한 임시 공간 -->
+								</form>
+							</div>
+
+							<div class="read-content-attachment">
+								<h6>
+									<i class="fa fa-download mb-2"></i> 첨부파일 <span>(3)</span>
+								</h6>
+
+								<div class="row attachment">
+									<div class="col-auto">
+										<a href="javascript:void()" class="text-muted">My-Photo.png</a>
+									</div>
+									<div class="col-auto">
+										<a href="javascript:void()" class="text-muted">My-File.docx</a>
+									</div>
+									<div class="col-auto">
+										<a href="javascript:void()" class="text-muted">My-Resume.pdf</a>
+									</div>
+								</div>
+							</div>
+							<hr>
+						</div>
+						<button type="button" class="btn btn-primary pull-right"
+							id="registerReply">답변 등록하기</button>
+					</div>
+					<!-- /# card -->
+					<!-- 답변하기 누르면 답변 show 할수 있음  (end)  -->
+
+					<c:if test="${board.replyChk == 0}">
+						<div class="car">
+							<div class="read-content">
+								<div class="media mb-4 mt-5">
+									<div class="media-body text-center">
+										<h5 class="my-1">등록된 답변이 없습니다 ㅠㅠ</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+					</c:if>
+
+					<!-- /# 등록 된 답변이 없습니다... card -->
+					<c:if test="${board.replyChk == 1}">
+						<c:forEach items="${reply}" var="reply">
+							<div class="card">
+								<div class="read-content">
+									<!-- 답변 있으면.. -->
+									
+									<div class="media mb-4 mt-5">
+										<div class="media-body">
+											<span class="pull-right">07:23 AM</span>
+											<h4 class="my-1 h4"><c:out value="${reply.title }"/></h4>
+										</div>
+									</div>
+									<div class="read-content-body">
+										<pre class="h5">
+											<c:out value="${reply.content }"/>
+										</pre>
+										<hr>
+									</div>
+									
+									
+									<div class="form-group mt-md-5 p-2">
+										<div class="input-group mb-3">
+											<input type="text" class="form-control"
+												placeholder="댓글 내용을 입력해주세요"
+												aria-label="Recipient's username"
+												aria-describedby="button-addon2">
+											<div class="input-group-append">
+												<button class="btn btn-outline-secondary" type="button" id="registerComment">댓글 등록</button>
 											</div>
-											<div class="media-body">
-												<h4 class="media-heading text-primary">최영우</h4>
-												<p>아니 그게 아니라.. 다른게 궁금한건데여</p>
-												<p class="comment-date">10 min ago</p>
-												<i class="fa fa-arrow-right col-md-5">
-													<div class="media-body float-right">
-														<h4 class="media-heading text-primary">최영우</h4>
-														<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
-														<p class="comment-date">10 min ago</p>
+										</div>
+										<div class="recent-comment m-t-15 p-2 pl-3">
+											<div class="media">
+												<div class="media-body">
+													<div style="margin-left : 0px;">
+														
+														<div class="media-body ml-md-3">
+															<div class="pull-right">
+																<p id="replyDelete" style="cursor: pointer;">삭제</p>
+																<p id="replyUpdate" style="cursor: pointer;">수정</p>
+																<p id="infiniteComment" style="cursor: pointer;">대댓글 달기</p>
+															</div>
+															<h4 class="media-heading text-primary">최영우</h4>
+															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
+															<p>10 min ago</p>
+														</div>
+													</div>
+													
+													<div id="infiniteReplySpace">
 														
 													</div>
-												</i>
-
+													
+													
+													<hr>
+													<div style="margin-left : 30px;">
+														<div class="pull-right">
+															<p>삭제</p>
+															<p>수정</p>
+															<p>대댓글 달기</p>
+														</div>
+														<i class="fa fa-arrow-right float-left" ></i>
+														<div class="media-body ml-md-3">
+															<h4 class="media-heading text-primary">최영우</h4>
+															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
+															<p>10 min ago</p>
+														</div>
+													</div>
+													<hr>
+													<div style="margin-left : 60px;">
+														<div class="pull-right">
+															<p>삭제</p>
+															<p>수정</p>
+															<p>대댓글 달기</p>
+														</div>
+														<i class="fa fa-arrow-right float-left" ></i>
+														<div class="media-body ml-md-3">
+															<h4 class="media-heading text-primary">최영우</h4>
+															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
+															<p>10 min ago</p>
+														</div>
+													</div>
+													<hr>
+													<div style="margin-left : 90px;">
+														<div class="pull-right">
+															<p>삭제</p>
+															<p>수정</p>
+															<p>대댓글 달기</p>
+														</div>
+														<i class="fa fa-arrow-right float-left" ></i>
+														<div class="media-body ml-md-3">
+															<h4 class="media-heading text-primary">최영우</h4>
+															<p>아니 그게 아니라.. 다른게 궁금한건데여dddddddddddddddddddddddddddddddddddddddddddddd</p>
+															<p>10 min ago</p>
+														</div>
+													</div>
+													<hr>
+												</div>
 											</div>
-
-										</div>
-
-										<div class="media">
-											<div class="media-left">
-												<a href="#"><img class="media-object mr-3" src="./images/avatar/2.png" alt=""></a>
-											</div>
-											<div class="media-body">
-												<h4 class="media-heading text-success">답변자</h4>
-												<p>그럼 뭔데여</p>
-												<p class="comment-date">1 hour ago</p>
-											</div>
-										</div>
-										<div class="media">
-											<div class="media-left">
-												<a href="#"><img class="media-object mr-3" src="./images/avatar/3.png" alt=""></a>
-											</div>
-											<div class="media-body">
-												<h4 class="media-heading text-danger">정리자</h4>
-												<p>그래요..</p>
-												<div class="comment-date">Yesterday</div>
-											</div>
-										</div>
-										<div class="row mt-4 m-4 mx-sm-4">
-											<div class="col-7">
-												<div class="text-left">1 - 20 of 568</div>
-											</div>
-											<div class="col-5">
-												<div class="btn-group float-right">
-													<button class="btn btn-dark" type="button"><i class="fa fa-angle-left"></i>
-													</button>
-													<button class="btn btn-dark" type="button"><i class="fa fa-angle-right"></i>
-													</button>
+											<div class="row mt-4 m-4 mx-sm-4">
+												<div class="col-7">
+													<div class="text-left">1 - 20 of 568</div>
+												</div>
+												<div class="col-5">
+													<div class="btn-group float-right">
+														<button class="btn btn-dark" type="button">
+															<i class="fa fa-angle-left"></i>
+														</button>
+														<button class="btn btn-dark" type="button">
+															<i class="fa fa-angle-right"></i>
+														</button>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+									
+									
+
 								</div>
 							</div>
-						</div>
-						<!-- /# card -->
-					</div>
+							<!-- /# card -->
+						</c:forEach>
+					</c:if>
+				</div>
 
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="footer">
-								<p>2018 © Admin Board. - <a href="#">example.com</a></p>
-							</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="footer">
+							<p>
+								2018 © Admin Board. - <a href="#">example.com</a>
+							</p>
 						</div>
 					</div>
-				</section>
-			</div>
+				</div>
+			</section>
 		</div>
 	</div>
-	<!-- jquery vendor -->
-	<script src="assets/js/lib/jquery.min.js"></script>
-	<script src="assets/js/lib/jquery.nanoscroller.min.js"></script>
-	<!-- nano scroller -->
-	<script src="assets/js/lib/menubar/sidebar.js"></script>
-	<script src="assets/js/lib/preloader/pace.min.js"></script>
-	<!-- sidebar -->
-	<script src="assets/js/lib/bootstrap.min.js"></script>
+</div>
+<%@ include file="../include/footer.jsp"%>
 
-	<!-- bootstrap -->
+<script>
+	$(function() {
+		var replyCard = $('#replyCard');
 
-	<script src="assets/js/lib/circle-progress/circle-progress.min.js"></script>
-	<script src="assets/js/lib/circle-progress/circle-progress-init.js"></script>
+		replyInit(replyCard);
 
-	<script src="assets/js/lib/morris-chart/raphael-min.js"></script>
-	<script src="assets/js/lib/morris-chart/morris.js"></script>
-	<script src="assets/js/lib/morris-chart/morris-init.js"></script>
+		$('#replyCancel').on("click", function(e) {
+			replyCard.hide();
+		});
 
-	<!--  flot-chart js -->
-	<script src="assets/js/lib/flot-chart/jquery.flot.js"></script>
-	<script src="assets/js/lib/flot-chart/jquery.flot.resize.js"></script>
-	<script src="assets/js/lib/flot-chart/flot-chart-init.js"></script>
-	<!-- // flot-chart js -->
+		$('#reply').on("click", function(e) {
+			replyCard.show();
+		});
 
+		$('#registerReply').on("click",function(e) {
+			e.preventDefault();
 
-	<script src="assets/js/lib/vector-map/jquery.vmap.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/jquery.vmap.min.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.algeria.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.argentina.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.brazil.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.france.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.germany.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.greece.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.iran.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.iraq.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.russia.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.tunisia.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.europe.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/country/jquery.vmap.usa.js"></script>
-	<!-- scripit init-->
-	<script src="assets/js/lib/vector-map/vector.init.js"></script>
+			var registerForm = $('#registerForm');
 
-	<script src="assets/js/lib/weather/jquery.simpleWeather.min.js"></script>
-	<script src="assets/js/lib/weather/weather-init.js"></script>
-	<script src="assets/js/lib/owl-carousel/owl.carousel.min.js"></script>
-	<script src="assets/js/lib/owl-carousel/owl.carousel-init.js"></script>
-	<script src="assets/js/scripts.js"></script>
-	<!-- scripit init-->
+			registerForm.append(
+				'<input type="hidden" name="qno" value="'
+				+ ${board.qno} + '"><input type="hidden" name="title" value="'
+				+ $('#title').val()
+				+ '"><input type="hidden" name="content" value="'
+				+ $('#email-compose-editor').val() 
+				+ '">').submit();
+		});
+		
+		
+		$('#infiniteComment').on("click", function(e){
+			$('#infiniteReplySpace').html('<div class="input-group mb-3"><input type="text" class="form-control"'+ 
+					'placeholder="댓글 내용을 입력해주세요" aria-label="Recipients username" aria-describedby="button-addon2"> '+ 
+					'<div class="input-group-append"><button class="btn btn-outline-secondary" type="button" id="registerComment">댓글 등록</button>'+
+					'<button class="btn btn-outline-secondary" type="button" id="infiniteReplyCancel">취소</button></div></div>');
+			
+			$('#infiniteReplyCancel').on("click", function(e){
+				$('#infiniteReplySpace').html('');
+			});
+		});
+		
+		$('#replyUpdate').on("click", function(e){
+			e.preventDefault();
+			
+			console.log('infinite update');
+		});
+		
+		$('#replyDelete').on("click", function(e){
+			e.preventDefault();
+			
+			console.log('infinite delete')
+		});
+	});
 
-</body></html>
+	function replyInit(replyCard) {
+		replyCard.hide();
+	};
+</script>
+</body>
+</html>
