@@ -57,5 +57,8 @@
 		select * from replyComment where qno=#{qno} and rno=#{rno} order by reorder
 	</select>
 	
+	<update id="updateReplyComment">
+		UPDATE replyComment SET content = #{content} WHERE commentNo=#{commentNo}
+	</update>
 	
 </mapper>

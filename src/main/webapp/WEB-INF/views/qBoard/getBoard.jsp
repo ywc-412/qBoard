@@ -135,16 +135,9 @@
 										<div class="mb-5" id="ajaxComment">
 											<button class="btn btn-sm" id="ajaxCommentBtn" data-rno="${reply.rno}" data-qno="${reply.qno }"><i class="fa fa-comment"> 댓글 보기</i></button>
 										</div>
-										
-										<div id="commentArea${reply.rno }">
-											<div class="input-group mb-3">
-												<input type="text" class="form-control"
-													placeholder="댓글 내용을 입력해주세요"
-													aria-label="Recipient's username"
-													aria-describedby="button-addon2">
-												<div class="input-group-append">
-													<button class="btn btn-outline-secondary" type="button" id="registerComment">댓글 등록</button>
-												</div>
+										<div>
+											<div id="commentArea${reply.rno}">
+												
 											</div>
 											<div class="recent-comment m-t-15 p-2 pl-3">
 												
@@ -156,29 +149,14 @@
 													
 												</div>
 												<!-- 댓글 end -->
-												
-												<div class="row mt-4 m-4 mx-sm-4">
-													<div class="col-7">
-														<div class="text-left">1 - 20 of 568</div>
-													</div>
-													<div class="col-5">
-														<div class="btn-group float-right">
-															<button class="btn btn-dark" type="button">
-																<i class="fa fa-angle-left"></i>
-															</button>
-															<button class="btn btn-dark" type="button">
-																<i class="fa fa-angle-right"></i>
-															</button>
-														</div>
-													</div>
+												<div id="replyCommentPaging${reply.rno }">
+													
 												</div>
-											
 											</div>
 										</div>
 									</div>
 									
-									
-
+					
 								</div>
 							</div>
 							<!-- /# card -->
@@ -200,70 +178,17 @@
 	</div>
 </div>
 <%@ include file="../include/footer.jsp"%>
-<script src="/resources/choiFunction/reply.js"></script>
+<script src="/resources/choiFunction/reply.js"></script><!--  -->
+<script src="/resources/choiFunction/replyCommentListAjax.js"></script>
+
 <script>
 	$(function() {
-		// 댓글 ajax 호출
 		
-		$('.btn btn-sm, button').on("click", function(e){
-			// ajax 비동기 통신 실행
-			var qno = $(this).data("rno");
-			var rno = $(this).data("qno");
-			
-			reply.getList(qno, rno, function(result){
-				$.each(result, function(index, item){
-					var realWriter;
-					if(!item.writer){
-						realWriter = 'anonymous';
-					}else{
-						realWriter = item.writer;
-					}
-					
-					$('#rno'+item.rno).append('<div class="media">' +
-												'<div class="media-body">' +
-													'<div style="margin-left : 0px;">' + 
-														'<div class="media-body ml-md-3">' +
-															'<div class="pull-right">' + 
-																'<p id="replyDelete" style="cursor: pointer;">삭제</p>' +
-																'<p id="replyUpdate" style="cursor: pointer;">수정</p>' +
-																'<p id="infiniteComment" style="cursor: pointer;">대댓글 달기</p>' +
-															'</div>' +
-															'<h4 class="media-heading text-primary">'+ realWriter +'</h4>'+
-															'<p>' + item.content + '</p>' + 
-															'<p>10 min ago</p>' +
-														'</div>' +
-													'</div>' +
-													'<div id="infiniteReplySpace">' +
-													
-													'</div>' + 
-												'</div>' + 
-											'</div>');
-				});
-			});
-			
-			
-			$('#commentArea'+$(this).data("rno")).show();
-		});
-		
-		
-		
-		var replyCard = $('#replyCard');
-
-		replyInit(replyCard);
-
-		$('#replyCancel').on("click", function(e) {
-			replyCard.hide();
-		});
-
-		$('#reply').on("click", function(e) {
-			replyCard.show();
-		});
-
 		$('#registerReply').on("click",function(e) {
 			e.preventDefault();
-
+				 
 			var registerForm = $('#registerForm');
-
+				 
 			registerForm.append(
 				'<input type="hidden" name="qno" value="'
 				+ ${board.qno} + '"><input type="hidden" name="title" value="'
@@ -274,33 +199,9 @@
 		});
 		
 		
-		$('#infiniteComment').on("click", function(e){
-			$('#infiniteReplySpace').html('<div class="input-group mb-3"><input type="text" class="form-control"'+ 
-					'placeholder="댓글 내용을 입력해주세요" aria-label="Recipients username" aria-describedby="button-addon2"> '+ 
-					'<div class="input-group-append"><button class="btn btn-outline-secondary" type="button" id="registerComment">댓글 등록</button>'+
-					'<button class="btn btn-outline-secondary" type="button" id="infiniteReplyCancel">취소</button></div></div>');
-			
-			$('#infiniteReplyCancel').on("click", function(e){
-				$('#infiniteReplySpace').html('');
-			});
-		});
-		
-		$('#replyUpdate').on("click", function(e){
-			e.preventDefault();
-			
-			console.log('infinite update');
-		});
-		
-		$('#replyDelete').on("click", function(e){
-			e.preventDefault();
-			
-			console.log('infinite delete')
-		});
 	});
 
-	function replyInit(replyCard) {
-		replyCard.hide();
-	};
+	
 </script>
 </body>
 </html>

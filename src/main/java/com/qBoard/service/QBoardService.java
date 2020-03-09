@@ -16,4 +16,6 @@ public interface QBoardService {
 	public int registerReply(ReplyVO rvo);
 	public int updateReplyChk(Integer qno);
 	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno);
+	public int updateReplyComment(Integer commentNo, String content);
+
 }

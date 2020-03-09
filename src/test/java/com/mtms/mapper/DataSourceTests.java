@@ -3,7 +3,6 @@ package com.mtms.mapper;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 
 import javax.sql.DataSource;
 

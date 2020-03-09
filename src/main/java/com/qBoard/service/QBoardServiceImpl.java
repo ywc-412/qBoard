@@ -71,6 +71,9 @@ public class QBoardServiceImpl implements QBoardService{
 		return qBoardMapper.getReplyComment(qno, rno);
 	}
 	
-	
+	public int updateReplyComment(Integer commentNo, String content) {
+		
+		return qBoardMapper.updateReplyComment(commentNo, content);
+	}
 	
 }

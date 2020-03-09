@@ -29,6 +29,9 @@
 										<div class="form-group">
 											<textarea id="email-compose-editor" class="textarea_editor form-control bg-transparent" rows="30" style="height: 100px;" placeholder="질문 내용을 입력해주세요!"></textarea>
                                         </div>
+                                        <div id="lengthChk">
+                                        	
+                                        </div>/300
 									</div>
 									<form action="/qBoard/regBoard" method="post" id="registerForm">
 										<!-- 제목하고 내용을 DB에 저장시키기 위한 임시 공간 -->
@@ -37,8 +40,13 @@
 								</div>
 
 								<div class="read-content-attachment">
-									<h6><i class="fa fa-download mb-2"></i> 첨부파일
-										<span>(3)</span></h6>
+									<h6>
+										<label>
+											<i class="fa fa-download mb-2 mr-md-2"></i>
+											파일 업로드하기
+											<input type="file" id="ex_file" style="display: none;">
+										</label>
+									</h6>
 									
 									<div class="row attachment">
 										<div class="col-auto">
@@ -75,6 +83,16 @@
 	
 	<script type="text/javascript" src="/resources/choiFunction/removeEscape.js"></script>
 	<script>
+		$(function(){
+			var len = 0;
+			$('#email-compose-editor').keyup(function(e){
+				var strChk = $('#email-compose-editor').val();
+				
+				$('#lengthChk').html(strChk.length);
+			});
+		})
+		
+	
 		$('#registerQuestion').on("click", function(e){
 			e.preventDefault();
 			
