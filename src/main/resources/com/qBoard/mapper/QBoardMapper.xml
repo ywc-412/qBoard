@@ -61,4 +61,20 @@
 		UPDATE replyComment SET content = #{content} WHERE commentNo=#{commentNo}
 	</update>
 	
+	<select id="getReplyCommentTotalCount" resultType="int">
+		SELECT count(*) FROM replyComment WHERE qno=#{qno} and rno=#{rno}
+	</select>
+	
+	<insert id="insertReplyCommentNoInfinite">
+		<selectKey keyProperty="commentNo" order="BEFORE" resultType="int">
+			SELECT seq_comment.nextval FROM dual
+		</selectKey>
+		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{commentNo}, #{redepth}, #{reorder}, #{qno})
+	</insert>
+	
+	<update id="updateReorderAfterInsertReplyComment">
+		UPDATE replyComment
+			SET REORDER = REORDER + 1
+        WHERE rno=#{rno} AND REORDER >= #{reorder}
+	</update>
 </mapper>

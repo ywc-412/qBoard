@@ -19,4 +19,7 @@ public interface QBoardMapper {
 	public int updateReplyChk(Integer qno);
 	public ArrayList<ReplyCommentVO> getReplyComment(@Param("qno") Integer qno, @Param("rno") Integer rno);
 	public int updateReplyComment(@Param("commentNo") Integer commentNo, @Param("content") String content);
+	public int getReplyCommentTotalCount(@Param("qno") Integer qno, @Param("rno") Integer rno);
+	public int insertReplyCommentNoInfinite(ReplyCommentVO rcVO);
+	public int updateReorderAfterInsertReplyComment(ReplyCommentVO rcVO);
 }

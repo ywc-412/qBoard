@@ -17,5 +17,7 @@ public interface QBoardService {
 	public int updateReplyChk(Integer qno);
 	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno);
 	public int updateReplyComment(Integer commentNo, String content);
-
+	public int getReplyCommentTotalCount(Integer qno, Integer rno);
+	public int insertReplyCommentNoInfinite(ReplyCommentVO rcVO);
+	public int updateReorderAfterInsertReplyComment(ReplyCommentVO rcVO);
 }

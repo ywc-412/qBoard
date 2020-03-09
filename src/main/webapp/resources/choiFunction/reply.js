@@ -34,8 +34,48 @@ var reply = (function() {
 		});
 	}
 	
+	function addReplyComment(param, callback, error){
+		$.ajax({
+			type: 'post',
+			url : '/replyComment/new',
+			data : JSON.stringify(param),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr){
+				if(callback){
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+		});
+	}
+	
+	function addInfiniteReplyComment(param, callback, error){
+		$.ajax({
+			type : 'post',
+			url : '/replyComment/infinite/new',
+			data : JSON.stringify(param),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr){
+				if(callback){
+					callback(result);
+				}
+			}, 
+			error : function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+		});
+	}
+	
 	return {
 		getList : getList,
-		updateReplyComment : updateReplyComment
+		updateReplyComment : updateReplyComment,
+		addReplyComment : addReplyComment,
+		addInfiniteReplyComment : addInfiniteReplyComment
 	};
 })();

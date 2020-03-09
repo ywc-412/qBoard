@@ -130,12 +130,12 @@
 										<hr>
 									</div>
 									
-									<div class="form-group mt-md-5 p-2">
+									<div class="form-group mt-md-2 p-2">
 										<!-- 댓글 보기 버튼 작성.. -->
-										<div class="mb-5" id="ajaxComment">
+										<div class="mb-3" id="ajaxComment">
 											<button class="btn btn-sm" id="ajaxCommentBtn" data-rno="${reply.rno}" data-qno="${reply.qno }"><i class="fa fa-comment"> 댓글 보기</i></button>
 										</div>
-										<div>
+										<div style="font-size: 0.8em;">
 											<div id="commentArea${reply.rno}">
 												
 											</div>

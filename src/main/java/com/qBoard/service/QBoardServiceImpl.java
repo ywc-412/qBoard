@@ -75,5 +75,20 @@ public class QBoardServiceImpl implements QBoardService{
 		
 		return qBoardMapper.updateReplyComment(commentNo, content);
 	}
+
+	@Override
+	public int getReplyCommentTotalCount(Integer qno, Integer rno) {
+		return qBoardMapper.getReplyCommentTotalCount(qno, rno);
+	}
+
+	@Override
+	public int insertReplyCommentNoInfinite(ReplyCommentVO rcVO) {
+		return qBoardMapper.insertReplyCommentNoInfinite(rcVO);
+	}
+
+	@Override
+	public int updateReorderAfterInsertReplyComment(ReplyCommentVO rcVO) {
+		return qBoardMapper.updateReorderAfterInsertReplyComment(rcVO);
+	}
 	
 }
