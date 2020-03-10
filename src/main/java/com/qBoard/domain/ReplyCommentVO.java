@@ -12,4 +12,5 @@ public class ReplyCommentVO {
 	private int reorder;
 	private String writer;
 	private String content;
+	private int regroup;
 }

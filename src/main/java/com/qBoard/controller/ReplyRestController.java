@@ -46,9 +46,7 @@ public class ReplyRestController {
 			consumes = "application/json",
 			produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> primaryInsert(@RequestBody ReplyCommentVO rcVO){
-		
-		int lastReorder = qBoardService.getReplyCommentTotalCount(rcVO.getQno(), rcVO.getRno()) + 1;
-		rcVO.setReorder(lastReorder);
+		rcVO.setReorder(1);
 		
 		return qBoardService.insertReplyCommentNoInfinite(rcVO) == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -57,10 +55,21 @@ public class ReplyRestController {
 	@PostMapping(value="/infinite/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> infiniteInsert(@RequestBody ReplyCommentVO rcVO){
 		
+		int commentNo = rcVO.getCommentNo();
+		int regroupCount = qBoardService.getReplyRegroupCount(rcVO.getRegroup());// 해당 regroup 댓글 count
+		
+		
+		Integer lastReorderForCompare = qBoardService.lastReorderForInsertReplyComment(commentNo);
+		
+		rcVO.setRegroup(commentNo);
+		
+		
+		
+		rcVO.setReorder(lastReorderForCompare + regroupCount);
+		
+		
 		qBoardService.updateReorderAfterInsertReplyComment(rcVO);
-		
-		qBoardService.insertReplyCommentNoInfinite(rcVO);
-		
+		qBoardService.insertReplyCommentInfinite(rcVO);
 		return new ResponseEntity<>("success", HttpStatus.OK);
 	}
 }

@@ -54,7 +54,7 @@
 	
 	<!-- 해당 댓글 ajax 비동기 처리 요청 쿼리 -->
 	<select id="getReplyComment" resultType="com.qBoard.domain.ReplyCommentVO">
-		select * from replyComment where qno=#{qno} and rno=#{rno} order by reorder
+		select * from replyComment where qno=#{qno} and rno=#{rno} order by reparent, reorder
 	</select>
 	
 	<update id="updateReplyComment">
@@ -69,7 +69,22 @@
 		<selectKey keyProperty="commentNo" order="BEFORE" resultType="int">
 			SELECT seq_comment.nextval FROM dual
 		</selectKey>
-		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{commentNo}, #{redepth}, #{reorder}, #{qno})
+		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{commentNo}, #{redepth}, #{reorder}, #{qno}, #{commentNo})
+	</insert>
+	
+	<select id="lastReorderForInsertReplyComment" resultType="int">
+		SELECT reorder FROM replyComment WHERE commentNo =#{commentNo}
+	</select>
+	
+	<select id="getReplyRegroupCount" resultType="int">
+		SELECT COUNT(*) FROM replyComment WHERE regroup=#{regroup}
+	</select>
+	
+	<insert id="insertReplyCommentInfinite">
+		<selectKey keyProperty="commentNo" order="BEFORE" resultType="int">
+			SELECT seq_comment.nextval FROM dual
+		</selectKey>
+		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{reparent}, #{redepth}, #{reorder}, #{qno}, #{regroup})
 	</insert>
 	
 	<update id="updateReorderAfterInsertReplyComment">

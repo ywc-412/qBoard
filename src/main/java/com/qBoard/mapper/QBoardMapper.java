@@ -22,4 +22,7 @@ public interface QBoardMapper {
 	public int getReplyCommentTotalCount(@Param("qno") Integer qno, @Param("rno") Integer rno);
 	public int insertReplyCommentNoInfinite(ReplyCommentVO rcVO);
 	public int updateReorderAfterInsertReplyComment(ReplyCommentVO rcVO);
+	public int insertReplyCommentInfinite(ReplyCommentVO rcVO);
+	public Integer lastReorderForInsertReplyComment(Integer reparent);
+	public int getReplyRegroupCount(Integer regroup);
 }

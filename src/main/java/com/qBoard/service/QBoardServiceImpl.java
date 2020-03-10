@@ -90,5 +90,20 @@ public class QBoardServiceImpl implements QBoardService{
 	public int updateReorderAfterInsertReplyComment(ReplyCommentVO rcVO) {
 		return qBoardMapper.updateReorderAfterInsertReplyComment(rcVO);
 	}
+
+	@Override
+	public int insertReplyCommentInfinite(ReplyCommentVO rcVO) {
+		return qBoardMapper.insertReplyCommentInfinite(rcVO);
+	}
+
+	@Override
+	public Integer lastReorderForInsertReplyComment(Integer reparent) {
+		return qBoardMapper.lastReorderForInsertReplyComment(reparent);
+	}
+
+	@Override
+	public int getReplyRegroupCount(Integer regroup) {
+		return qBoardMapper.getReplyRegroupCount(regroup);
+	}
 	
 }
