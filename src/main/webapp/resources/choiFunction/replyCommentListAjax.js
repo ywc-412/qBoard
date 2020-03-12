@@ -74,7 +74,7 @@ $(document).on("click", ".updateReplyComment", function(e){
 
 
 //대댓글 달기 버튼 클릭 이벤트
-$(document).on("click", ".infiniteCommentReply, p", function(e){
+$(document).on("click", ".infiniteCommentReply", function(e){
 	var commentNo = $(this).data("infiniteCommentno");
 	var redepth = $(this).data("infiniteRedepth");
 	var qno = $(this).data("infiniteQno");
@@ -155,15 +155,100 @@ $(document).on("click", ".registerComment", function(e){
 
 
 
+//더보기 버튼 클릭 이벤트 start
+$(document).on("click", "#moreReplyComment", function(e){
+	e.preventDefault();
+	console.log('더보기 버튼 hi');
+	var qno = $(this).data("moreQno");
+	var rno = $(this).data("moreRno");
+	var pageNum =$(this).data("morePagenum");
+	
+	var param = {
+		qno : qno,
+		rno : rno,
+		amount : 5,
+		pageNum : pageNum
+	};
+	
+	reply.getList(param, function(result){
+		$.each(result, function(index, item){
+			var realWriter;
+			if(!item.writer){
+				realWriter = 'anonymous';
+			}else{
+				realWriter = item.writer;
+			}
+			
+		$('#rno'+item.rno).append('<div class="media">' + 
+									'<div class="media-body" id="">' + 
+										'<div style="margin-left : '+item.redepth*40+'px;">' + 
+											(item.redepth > 0 ? '<i class="fa fa-arrow-right float-left mr-md-2"></i>': '') +
+											'<div class="media-body m1l-md-3">' + 
+												'<div class="pull-right">' + 
+													'<p class="replyDelete" data-delete-qno="'+item.qno+'" data-delete-rno="'+item.rno+'"  data-delete-commentno="'+item.commentNo+'" style="cursor: pointer;">삭제</p>' + 
+													'<p class="replyUpdate" data-update-commentno="'+item.commentNo+'" data-update-content="'+item.content+'" style="cursor: pointer;">수정</p>' + 
+													'<p class="infiniteCommentReply" data-infinite-regroup="'+item.regroup+'" data-infinite-reparent="'+item.reparent+'" data-infinite-reorder="'+item.reorder+'" data-infinite-redepth="'+item.redepth+'" data-infinite-qno="'+item.qno+'" data-infinite-rno="'+item.rno+'" data-infinite-commentno="'+item.commentNo+'" style="cursor: pointer;">대댓글 달기</p>' + 
+												'</div>' + 
+												'<h4 class="media-heading text-primary">'+ realWriter +'</h4>'+ 
+												'<div id="replyCommentForUpdateSpace'+item.commentNo+'">' + 
+													(item.deleteChk == 1? '<p id="idForUpdate"'+item.commentNo+'">[ 삭제된 댓글입니다 ]</p>' : '<p id="idForUpdate'+item.commentNo+'">' + item.content + '</p>') + 
+												'</div>' +
+												'<p>10 min ago</p>' + 
+											'</div>' + 
+										'</div>' + 
+										'<div id="infiniteReplySpace'+item.commentNo+'">' + 
+											
+										'</div>' + 
+									'</div>' + 
+								'</div>'
+								);
+		});
+	});
+	
+	$('button[name=moreBtnForPageNum'+rno+']').data("morePagenum", pageNum+1);
+});
+//더보기 버튼 클릭 이벤트 end
+
+
+
+
+// 삭제 버튼 클릭 이벤트 start
+$(document).on("click", ".replyDelete", function(e){
+	
+	if(confirm('댓글을 삭제하시겠습니까?')){
+		var commentNo = $(this).data("deleteCommentno");
+		var qno = $(this).data("deleteQno");
+		var rno = $(this).data("deleteRno");
+		// 삭제 이지만 update ajax 통신 실행
+		reply.updateDelete(commentNo, function(result){
+			showReplyCommentList(qno, rno);
+		});
+	}
+	
+});
+// 삭제 버튼 클릭 이벤트 end
+
+
+
+
 // 댓글 리스트 출력 함수 start
 function showReplyCommentList(qno, rno){
+	
 	$('#commentArea' + rno).html('<div class="input-group mb-3">'+
 									'<input type="text" class="form-control" placeholder="댓글 내용을 입력해주세요" id="registerCommentInput'+rno+'">' +
 									'<div class="input-group-append">' +
 										'<button class="btn btn-outline-secondary registerComment" type="button" id="registerComment" data-register-rno="'+rno+'" data-register-qno="'+qno+'">댓글 등록</button>' + 
 									'</div>' +
 								'</div>');
-	reply.getList(qno, rno, function(result){
+	
+	var param = {
+		qno : qno,
+		rno : rno,
+		amount : 5,
+		pageNum : 1
+	};
+	
+	reply.getList(param, function(result){
 		$('#rno'+rno).html('');	// 댓글 보기 버튼을 눌렸을 떄 중복 append 되지 않도록 방지..
 		$.each(result, function(index, item){
 			var realWriter;
@@ -172,20 +257,20 @@ function showReplyCommentList(qno, rno){
 			}else{
 				realWriter = item.writer;
 			}
-
+			
 		$('#rno'+item.rno).append('<div class="media">' + 
 									'<div class="media-body" id="">' + 
 										'<div style="margin-left : '+item.redepth*40+'px;">' + 
 											(item.redepth > 0 ? '<i class="fa fa-arrow-right float-left mr-md-2"></i>': '') +
 											'<div class="media-body m1l-md-3">' + 
 												'<div class="pull-right">' + 
-													'<p id="replyDelete" style="cursor: pointer;">삭제</p>' + 
+													'<p class="replyDelete" data-delete-qno="'+item.qno+'" data-delete-rno="'+item.rno+'" data-delete-commentno="'+item.commentNo+'" style="cursor: pointer;">삭제</p>' + 
 													'<p class="replyUpdate" data-update-commentno="'+item.commentNo+'" data-update-content="'+item.content+'" style="cursor: pointer;">수정</p>' + 
 													'<p class="infiniteCommentReply" data-infinite-regroup="'+item.regroup+'" data-infinite-reparent="'+item.reparent+'" data-infinite-reorder="'+item.reorder+'" data-infinite-redepth="'+item.redepth+'" data-infinite-qno="'+item.qno+'" data-infinite-rno="'+item.rno+'" data-infinite-commentno="'+item.commentNo+'" style="cursor: pointer;">대댓글 달기</p>' + 
 												'</div>' + 
 												'<h4 class="media-heading text-primary">'+ realWriter +'</h4>'+ 
 												'<div id="replyCommentForUpdateSpace'+item.commentNo+'">' + 
-													'<p id="idForUpdate'+item.commentNo+'">' + item.content + '</p>' + 
+													(item.deleteChk == 1? '<p id="idForUpdate"'+item.commentNo+'">[ 삭제된 댓글입니다 ]</p>' : '<p id="idForUpdate'+item.commentNo+'">' + item.content + '</p>') + 
 												'</div>' +
 												'<p>10 min ago</p>' + 
 											'</div>' + 
@@ -200,7 +285,7 @@ function showReplyCommentList(qno, rno){
 	});
 	
 	$('#replyCommentPaging'+rno).html(
-										'<button type="button" class="mt-md-4 btn btn-primary w-100"><i class="fa fa-angle-down"></i> 더 보기</button>'
+						'<button name="moreBtnForPageNum'+rno+'" type="button" data-more-rno="'+rno+'" data-more-qno="'+qno+'" data-more-pagenum="2" class="mt-md-4 btn btn-primary w-100" id="moreReplyComment"><i class="fa fa-angle-down"></i> 더 보기</button>'
 									);
 	$('#commentArea'+rno).show();
 }

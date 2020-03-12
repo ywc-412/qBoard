@@ -140,12 +140,11 @@
 												
 											</div>
 											<div class="recent-comment m-t-15 p-2 pl-3">
-												
 												<!-- 댓글 foreach 문 돌아아한다... rno를 통하여.. -->
 												<!-- 
 													if : replyComment의 rno가 해당 rno에 해당 되면 그거 foreach..?
 												 -->
-												<div id="rno${reply.rno }">
+												<div id="rno${reply.rno}">
 													
 												</div>
 												<!-- 댓글 end -->

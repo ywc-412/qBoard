@@ -2,6 +2,7 @@ package com.qBoard.service;
 
 import java.util.ArrayList;
 
+import com.qBoard.domain.AttachFileVO;
 import com.qBoard.domain.PageCriteria;
 import com.qBoard.domain.QuestionBVO;
 import com.qBoard.domain.ReplyCommentVO;
@@ -15,7 +16,7 @@ public interface QBoardService {
 	public ArrayList<ReplyVO> getReply(Integer qNo);
 	public int registerReply(ReplyVO rvo);
 	public int updateReplyChk(Integer qno);
-	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno);
+	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno, Integer amount, Integer pageNum);
 	public int updateReplyComment(Integer commentNo, String content);
 	public int getReplyCommentTotalCount(Integer qno, Integer rno);
 	public int insertReplyCommentNoInfinite(ReplyCommentVO rcVO);
@@ -23,4 +24,5 @@ public interface QBoardService {
 	public int insertReplyCommentInfinite(ReplyCommentVO rcVO);
 	public Integer lastReorderForInsertReplyComment(Integer reparent);
 	public int getReplyRegroupCount(Integer regroup);
+	public int updateDelete(Integer commentNo);
 }

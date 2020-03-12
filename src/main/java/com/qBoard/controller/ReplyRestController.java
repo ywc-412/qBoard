@@ -27,10 +27,10 @@ public class ReplyRestController {
 	
 	private QBoardService qBoardService;
 	
-	@GetMapping(value="/{qNo}/{rNo}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<ArrayList<ReplyCommentVO>> get(@PathVariable("qNo") int qno,@PathVariable("rNo") int rno){
+	@GetMapping(value= {"/{qNo}/{rNo}/{amount}/{pageNum}"}, produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<ArrayList<ReplyCommentVO>> get(@PathVariable("qNo") int qno,@PathVariable("rNo") int rno, @PathVariable("amount")Integer amount, @PathVariable("pageNum")Integer pageNum){
 		
-		return new ResponseEntity<>(qBoardService.getReplyComment(qno, rno), HttpStatus.OK);
+		return new ResponseEntity<>(qBoardService.getReplyComment(qno, rno, amount, pageNum), HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, 
@@ -40,6 +40,15 @@ public class ReplyRestController {
 	public @ResponseBody ResponseEntity<String> update(@PathVariable("content") String content, @PathVariable("commentNo") int commentNo){
 		
 		return qBoardService.updateReplyComment(commentNo, content) == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, 
+			value="/deleteUpdate/{commentNo}", 
+			consumes = "application/json",
+			 produces = { MediaType.TEXT_PLAIN_VALUE })
+	public @ResponseBody ResponseEntity<String> updateDelete(@PathVariable("commentNo") int commentNo){
+		
+		return qBoardService.updateDelete(commentNo) == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>("faile",HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@PostMapping(value = "/new",
@@ -62,9 +71,6 @@ public class ReplyRestController {
 		Integer lastReorderForCompare = qBoardService.lastReorderForInsertReplyComment(commentNo);
 		
 		rcVO.setRegroup(commentNo);
-		
-		
-		
 		rcVO.setReorder(lastReorderForCompare + regroupCount);
 		
 		

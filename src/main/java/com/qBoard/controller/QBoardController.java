@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.qBoard.domain.AttachFileVO;
 import com.qBoard.domain.PageCriteria;
 import com.qBoard.domain.PageDTO;
 import com.qBoard.domain.QuestionBVO;
@@ -51,6 +52,8 @@ public class QBoardController {
 	
 	@PostMapping("/regBoard")
 	public String registerBoard(QuestionBVO bvo) {
+		
+		System.out.println(bvo.getAttachList());
 		
 		qBoardService.registerQuestion(bvo);
 		

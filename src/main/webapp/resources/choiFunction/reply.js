@@ -1,7 +1,7 @@
 var reply = (function() {
 	
-	function getList(rno, qno, callback, error) {
-		$.getJSON("/replyComment/" + rno + "/" + qno + ".json", 
+	function getList(param, callback, error) {
+		$.getJSON("/replyComment/" + param.qno + "/" + param.rno + "/" + param.amount + "/" + param.pageNum + ".json", 
 			function(data) {
 				if (callback) {
 					// 갯수, 리스트
@@ -20,6 +20,26 @@ var reply = (function() {
 			type : 'PUT',
 			url : '/replyComment/update/' + content + "/" + commentNo,
 			data : JSON.stringify({content, commentNo}),
+			contentType : "application/json; charset=utf-8",
+			success : function(result, status, xhr){
+				if(callback){
+					callback(result);
+				}
+			},
+			error : function(xhr, status, er){
+				if(error){
+					error(er);
+				}
+			}
+		});
+	}
+	
+	
+	function updateDelete(commentNo, callback, error){
+		$.ajax({
+			type : 'PUT',
+			url : '/replyComment/deleteUpdate/' + commentNo,
+			data : JSON.stringify(commentNo),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr){
 				if(callback){
@@ -76,6 +96,7 @@ var reply = (function() {
 		getList : getList,
 		updateReplyComment : updateReplyComment,
 		addReplyComment : addReplyComment,
-		addInfiniteReplyComment : addInfiniteReplyComment
+		addInfiniteReplyComment : addInfiniteReplyComment,
+		updateDelete : updateDelete
 	};
 })();

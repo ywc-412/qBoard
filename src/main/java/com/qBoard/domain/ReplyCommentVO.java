@@ -13,4 +13,5 @@ public class ReplyCommentVO {
 	private String writer;
 	private String content;
 	private int regroup;
+	private int deleteChk;
 }

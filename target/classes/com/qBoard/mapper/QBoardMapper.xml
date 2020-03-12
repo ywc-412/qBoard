@@ -54,7 +54,15 @@
 	
 	<!-- 해당 댓글 ajax 비동기 처리 요청 쿼리 -->
 	<select id="getReplyComment" resultType="com.qBoard.domain.ReplyCommentVO">
-		select * from replyComment where qno=#{qno} and rno=#{rno} order by reparent, reorder
+		<![CDATA[	
+			SELECT * FROM(
+			    SELECT rownum rn, rno, commentNo, writer, content, reparent, redepth, reorder, qno, regroup, deleteChk FROM(
+			        SELECT *
+			        FROM replyComment
+			        WHERE qno=#{qno} and rno=#{rno} order by reparent desc, reorder
+			    ) WHERE rownum <= #{pageNum} * #{amount}
+			)WHERE rn > (#{pageNum} - 1 ) * #{amount}
+		]]>
 	</select>
 	
 	<update id="updateReplyComment">
@@ -69,7 +77,7 @@
 		<selectKey keyProperty="commentNo" order="BEFORE" resultType="int">
 			SELECT seq_comment.nextval FROM dual
 		</selectKey>
-		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{commentNo}, #{redepth}, #{reorder}, #{qno}, #{commentNo})
+		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{commentNo}, #{redepth}, #{reorder}, #{qno}, #{commentNo}, DEFAULT)
 	</insert>
 	
 	<select id="lastReorderForInsertReplyComment" resultType="int">
@@ -84,7 +92,7 @@
 		<selectKey keyProperty="commentNo" order="BEFORE" resultType="int">
 			SELECT seq_comment.nextval FROM dual
 		</selectKey>
-		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{reparent}, #{redepth}, #{reorder}, #{qno}, #{regroup})
+		INSERT INTO replyComment VALUES(#{rno}, #{commentNo}, #{writer}, #{content}, #{reparent}, #{redepth}, #{reorder}, #{qno}, #{regroup}, DEFAULT)
 	</insert>
 	
 	<update id="updateReorderAfterInsertReplyComment">
@@ -92,4 +100,12 @@
 			SET REORDER = REORDER + 1
         WHERE rno=#{rno} AND REORDER >= #{reorder}
 	</update>
+	
+	<update id="updateDelete">
+		UPDATE replyComment SET deleteChk = 1 WHERE commentNo=#{commentNo}
+	</update>
+	
+	<insert id="insertAttach">
+		INSERT INTO questionAttach VALUES(#{qno}, #{uuid}, #{uploadPath}, #{fileName})
+	</insert>
 </mapper>

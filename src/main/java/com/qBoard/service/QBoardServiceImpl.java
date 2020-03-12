@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qBoard.domain.AttachFileVO;
 import com.qBoard.domain.PageCriteria;
 import com.qBoard.domain.QuestionBVO;
 import com.qBoard.domain.ReplyCommentVO;
@@ -25,6 +26,10 @@ public class QBoardServiceImpl implements QBoardService{
 	public int registerQuestion(QuestionBVO bvo) {
 		
 		int insertOk = qBoardMapper.insertQuestion(bvo);
+		
+		bvo.getAttachList().forEach(attach ->{
+			qBoardMapper.insertAttach(attach);
+		});
 		
 		if(insertOk == 1) {
 			return 1;
@@ -66,9 +71,8 @@ public class QBoardServiceImpl implements QBoardService{
 	}
 
 	@Override
-	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno) {
-		
-		return qBoardMapper.getReplyComment(qno, rno);
+	public ArrayList<ReplyCommentVO> getReplyComment(Integer qno, Integer rno, Integer amount, Integer pageNum) {
+		return qBoardMapper.getReplyComment(qno, rno, amount, pageNum);
 	}
 	
 	public int updateReplyComment(Integer commentNo, String content) {
@@ -105,5 +109,11 @@ public class QBoardServiceImpl implements QBoardService{
 	public int getReplyRegroupCount(Integer regroup) {
 		return qBoardMapper.getReplyRegroupCount(regroup);
 	}
+
+	@Override
+	public int updateDelete(Integer commentNo) {
+		return qBoardMapper.updateDelete(commentNo);
+	}
+
 	
 }

@@ -1,6 +1,7 @@
 package com.qBoard.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -13,4 +14,6 @@ public class QuestionBVO {
 	private Date updateDate;
 	private int privacyChk;
 	private int replyChk;
+	
+	private List<AttachFileVO> attachList;
 }

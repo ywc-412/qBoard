@@ -33,7 +33,7 @@
                                         	
                                         </div>/300
 									</div>
-									<form action="/qBoard/regBoard" method="post" id="registerForm">
+									<form action="/qBoard/regBoard" method="post" id="registerForm" role="form">
 										<!-- 제목하고 내용을 DB에 저장시키기 위한 임시 공간 -->
 										
 									</form>
@@ -41,22 +41,18 @@
 
 								<div class="read-content-attachment">
 									<h6>
-										<label>
+										<label style="cursor: pointer;">
 											<i class="fa fa-download mb-2 mr-md-2"></i>
 											파일 업로드하기
-											<input type="file" id="ex_file" style="display: none;">
+											<input type="file" name="uploadedFile" style="display: none;" multiple>
 										</label>
 									</h6>
 									
 									<div class="row attachment">
 										<div class="col-auto">
-											<a href="javascript:void()" class="text-muted">My-Photo.png</a>
-										</div>
-										<div class="col-auto">
-											<a href="javascript:void()" class="text-muted">My-File.docx</a>
-										</div>
-										<div class="col-auto">
-											<a href="javascript:void()" class="text-muted">My-Resume.pdf</a>
+											<ul class="text-muted uploadResult" id="fileInputAppendHere">
+												
+											</ul>
 										</div>
 									</div>
 								</div>
@@ -80,40 +76,7 @@
 	</div>
 	<!-- jquery vendor -->
 	<%@ include file="../include/footer.jsp" %>
-	
+	<script type="text/javascript" src="/resources/choiFunction/uploadAjax.js"></script>
 	<script type="text/javascript" src="/resources/choiFunction/removeEscape.js"></script>
-	<script>
-		$(function(){
-			var len = 0;
-			$('#email-compose-editor').keyup(function(e){
-				var strChk = $('#email-compose-editor').val();
-				
-				$('#lengthChk').html(strChk.length);
-			});
-		})
-		
-	
-		$('#registerQuestion').on("click", function(e){
-			e.preventDefault();
-			
-			var title = $('#title').val();
-			var textArea = $('#email-compose-editor').val();
-			
-			// 공백 처리..
-			if(!title || !textArea){
-				alert('제목 또는 내용을 입력해주세요!');
-				return;
-			}
-			
-			var resultTitle = removeBad(title);
-			var resultTextArea = removeBad(textArea);
-			
-			
-			var registerForm = $('#registerForm');
-			
-			registerForm.append('<input type="hidden" name="title" value="<c:out value="'+ resultTitle +'" escapeXml="false"/>"/><input type="hidden" name="content" value="<c:out value="'+ resultTextArea +'" escapeXml="false"/>"/>').submit();
-		});
-		
-	</script>
 	
 </body></html>
