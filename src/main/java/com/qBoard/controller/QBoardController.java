@@ -38,6 +38,7 @@ public class QBoardController {
 	public void getBoard(Model model, Integer qNo) {
 		model.addAttribute("board", qBoardService.getBoard(qNo));
 		model.addAttribute("reply", qBoardService.getReply(qNo));
+		model.addAttribute("attachList", qBoardService.getAttachList(qNo));
 	}
 	
 	@GetMapping("/modBoard")

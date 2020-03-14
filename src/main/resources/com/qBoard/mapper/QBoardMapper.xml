@@ -65,6 +65,10 @@
 		]]>
 	</select>
 	
+	<select id="getAttachList" resultType="com.qBoard.domain.AttachFileVO">
+		SELECT * FROM questionAttach WHERE qno=#{qno}
+	</select>
+	
 	<update id="updateReplyComment">
 		UPDATE replyComment SET content = #{content} WHERE commentNo=#{commentNo}
 	</update>
@@ -106,6 +110,6 @@
 	</update>
 	
 	<insert id="insertAttach">
-		INSERT INTO questionAttach VALUES(#{qno}, #{uuid}, #{uploadPath}, #{fileName})
+		INSERT INTO questionAttach VALUES(seq_qBoard.currval, #{uuid}, #{uploadPath}, #{fileName})
 	</insert>
 </mapper>

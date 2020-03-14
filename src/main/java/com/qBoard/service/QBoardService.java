@@ -13,6 +13,7 @@ public interface QBoardService {
 	public int totalCountSelect();
 	public ArrayList<QuestionBVO> getListWithPaging(PageCriteria pc);
 	public QuestionBVO getBoard(Integer qNo);
+	public ArrayList<AttachFileVO> getAttachList(Integer qno);
 	public ArrayList<ReplyVO> getReply(Integer qNo);
 	public int registerReply(ReplyVO rvo);
 	public int updateReplyChk(Integer qno);

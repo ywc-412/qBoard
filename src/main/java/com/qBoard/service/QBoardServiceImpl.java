@@ -53,6 +53,12 @@ public class QBoardServiceImpl implements QBoardService{
 	public QuestionBVO getBoard(Integer qNo) {
 		return qBoardMapper.getBoard(qNo);
 	}
+	
+	@Override
+	public ArrayList<AttachFileVO> getAttachList(Integer qno) {
+		
+		return qBoardMapper.getAttachList(qno);
+	}
 
 	@Override
 	public int registerReply(ReplyVO rvo) {
@@ -114,6 +120,8 @@ public class QBoardServiceImpl implements QBoardService{
 	public int updateDelete(Integer commentNo) {
 		return qBoardMapper.updateDelete(commentNo);
 	}
+
+	
 
 	
 }

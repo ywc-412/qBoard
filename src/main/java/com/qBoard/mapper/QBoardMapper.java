@@ -1,7 +1,6 @@
 package com.qBoard.mapper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -28,5 +27,6 @@ public interface QBoardMapper {
 	public Integer lastReorderForInsertReplyComment(Integer reparent);
 	public int getReplyRegroupCount(Integer regroup);
 	public int updateDelete(Integer commentNo);
-	public List<AttachFileVO> insertAttach(AttachFileVO avo);
+	public void insertAttach(AttachFileVO avo);
+	public ArrayList<AttachFileVO> getAttachList(Integer qno);
 }

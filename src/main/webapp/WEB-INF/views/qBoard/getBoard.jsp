@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@include file="../include/menubar.jsp"%>
 
 
 <div class="content-wrap">
-
 	<div class="main">
 		<div class="container-fluid">
 			<div class="row">
@@ -31,18 +31,14 @@
 							</div>
 							<div class="read-content-attachment">
 								<h6>
-									<i class="fa fa-download mb-2"></i> 첨부파일 <span>(3)</span>
+									<i class="fa fa-download mb-2"></i> 첨부파일 <span> [ <c:out value="${fn:length(attachList)}"/> ] </span>
 								</h6>
 								<div class="row attachment">
-									<div class="col-auto">
-										<a href="javascript:void()" class="text-muted">My-Photo.png</a>
-									</div>
-									<div class="col-auto">
-										<a href="javascript:void()" class="text-muted">My-File.docx</a>
-									</div>
-									<div class="col-auto">
-										<a href="javascript:void()" class="text-muted">My-Resume.pdf</a>
-									</div>
+									<ul class="text-muted uploadResult" id="fileInputAppendHere">
+										<c:forEach items="${attachList}" var="attachList">
+											<li class="float-left mr-md-3 downloadFile" data-uploadpath="${attachList.uploadPath}" data-uuid="${attachList.uuid }" data-filename="${attachList.fileName }"><c:out value="${attachList.fileName}"/></li>		
+										</c:forEach>
+									</ul>
 								</div>
 							</div>
 							<hr>
@@ -73,24 +69,6 @@
 								<form action="/qBoard/regReply" method="post" id="registerForm">
 									<!-- 제목하고 내용을 DB에 저장시키기 위한 임시 공간 -->
 								</form>
-							</div>
-
-							<div class="read-content-attachment">
-								<h6>
-									<i class="fa fa-download mb-2"></i> 첨부파일 <span>(3)</span>
-								</h6>
-
-								<div class="row attachment">
-									<div class="col-auto">
-										<a href="javascript:void()" class="text-muted">My-Photo.png</a>
-									</div>
-									<div class="col-auto">
-										<a href="javascript:void()" class="text-muted">My-File.docx</a>
-									</div>
-									<div class="col-auto">
-										<a href="javascript:void()" class="text-muted">My-Resume.pdf</a>
-									</div>
-								</div>
 							</div>
 							<hr>
 						</div>
@@ -197,6 +175,17 @@
 				+ '">').submit();
 		});
 		
+		$('.downloadFile').on("click", function(e){
+			console.log('download start');
+			console.log($(this).data("uploadpath") + " , " + $(this).data("uuid") + " , " + $(this).data("filename"));
+			var uuid = $(this).data("uuid");
+			var name = $(this).data("filename");
+			var fileName = $(this).data("uploadpath") + '/' + uuid + '_' + name;
+			
+			var fileRealName = encodeURIComponent(fileName);
+			
+			self.location= '/file/download?fileName='+fileRealName;
+		});
 		
 	});
 
