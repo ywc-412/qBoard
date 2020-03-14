@@ -14,7 +14,7 @@
 		<org.aspectj-version>1.9.0</org.aspectj-version>
 		<org.slf4j-version>1.7.25</org.slf4j-version>
 	</properties>
-
+		
 	<repositories>
 		<!-- oracle repository -->
 		<repository>
@@ -159,12 +159,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.apache.poi</groupId>
-    		<artifactId>poi-ooxml</artifactId>
-    		<version>4.0.0</version>
 		</dependency>
 		
 		<!-- jackson-databind -->
